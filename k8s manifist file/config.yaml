@@ -20,10 +20,24 @@ spec:
         name: email-service-container
         ports:
           - containerPort: 8080
+        readinessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
         env:
           - name: PORT
             value: "8080"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -70,12 +84,26 @@ spec:
         name: recommendation-service-container
         ports:
           - containerPort: 8080
+        readinessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
         env:
           - name: PORT
             value: "8080"
           - name: PRODUCT_CATALOG_SERVICE_ADDR
             value: "productcatalog-service-svc:3550"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 220Mi
+          limits:
+            cpu: 200m
+            memory: 450Mi
 status: {}
 
 ---
@@ -120,10 +148,24 @@ spec:
         name: productcatalog-service-container
         ports:
           - containerPort: 3550
+        readinessProbe:
+          grpc:
+            port: 3550
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 3550
+          periodSeconds: 5
         env:
           - name: PORT
             value: "3550"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -169,12 +211,26 @@ spec:
         name: payment-service-container
         ports:
           - containerPort: 50051
+        readinessProbe:
+          grpc:
+            port: 50051
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 50051
+          periodSeconds: 5
         env:
           - name: PORT
             value: "50051"
           - name: DISABLE_PROFILER
             value: "1"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -220,12 +276,26 @@ spec:
         name: currency-service-container
         ports:
           - containerPort: 7000
+        readinessProbe:
+          grpc:
+            port: 7000
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 7000
+          periodSeconds: 5
         env:
           - name: PORT
             value: "7000"
           - name: DISABLE_PROFILER
             value: "1"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -271,10 +341,24 @@ spec:
         name: shipping-service-container
         ports:
           - containerPort: 50051
+        readinessProbe:
+          grpc:
+            port: 50051
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 50051
+          periodSeconds: 5
         env:
           - name: PORT
             value: "50051"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -320,10 +404,26 @@ spec:
         name: ad-service-container
         ports:
           - containerPort: 9555
+        readinessProbe:
+          initialDelaySeconds: 20
+          grpc:
+            port: 9555
+          periodSeconds: 15
+        livenessProbe:
+          grpc:
+            port: 9555
+          initialDelaySeconds: 20
+          periodSeconds: 15
         env:
           - name: PORT
             value: "9555"
-        resources: {}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 180Mi
+          limits:
+            cpu: 300m
+            memory: 300Mi
 status: {}
 
 ---
@@ -369,12 +469,26 @@ spec:
         name: cart-service-container
         ports:
           - containerPort: 7070
+        readinessProbe:
+          grpc:
+            port: 7070
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 7070
+          periodSeconds: 5
         env:
           - name: PORT
             value: "7070"
           - name: REDIS_ADDR
             value: "redis-cart-svc:6379"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -426,7 +540,21 @@ spec:
               mountPath: /data
         ports:
           - containerPort: 6379
-        resources: {}
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          periodSeconds: 5
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 125m
+          requests:
+            cpu: 70m
+            memory: 200Mi
 status: {}
 
 ---
@@ -487,7 +615,21 @@ spec:
             value: "currency-service-svc:7000"
           - name: CART_SERVICE_ADDR
             value: "cart-service-svc:7070"
-        resources: {}
+        readinessProbe:
+          grpc:
+            port: 5050
+          periodSeconds: 5
+        livenessProbe:
+          grpc:
+            port: 5050
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -552,7 +694,13 @@ spec:
             value: "recommendation-service-svc:8080"
           - name: ENABLE_PROFILER
             value: "0"
-        resources: {}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
 status: {}
 
 ---
@@ -568,10 +716,9 @@ spec:
   - port: 8080
     protocol: TCP
     targetPort: 8080
-    nodePort: 30010
   selector:
    app: fontend-pod
-  type: NodePort
+  type: LoadBalancer
 status:
   loadBalancer: {}
 
