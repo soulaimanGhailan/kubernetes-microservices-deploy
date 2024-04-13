@@ -1,0 +1,578 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: email-service-dep
+  name: email-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: email-service-pod
+    spec:
+      containers:
+      - image: gcr.io/google-samples/microservices-demo/emailservice:v0.9.0
+        name: email-service-container
+        ports:
+          - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: email-service-svc
+  name: email-service-svc
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: email-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: recommendation-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: recommendation-service-pod
+    spec:
+      containers:
+      - image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.9.0
+        name: recommendation-service-container
+        ports:
+          - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalog-service-svc:3550"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: recommendation-service-svc
+  name: recommendation-service-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: recommendation-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: productcatalog-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productcatalog-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: productcatalog-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/productcatalogservice:v0.9.0
+        name: productcatalog-service-container
+        ports:
+          - containerPort: 3550
+        env:
+          - name: PORT
+            value: "3550"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: productcatalog-service-svc
+  name: productcatalog-service-svc
+spec:
+  ports:
+  - port: 3550
+    protocol: TCP
+    targetPort: 3550
+  selector:
+   app: productcatalog-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: payment-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: payment-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/paymentservice:v0.9.0
+        name: payment-service-container
+        ports:
+          - containerPort: 50051
+        env:
+          - name: PORT
+            value: "50051"
+          - name: DISABLE_PROFILER
+            value: "1"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: payment-service-svc
+  name: payment-service-svc
+spec:
+  ports:
+  - port: 50051
+    protocol: TCP
+    targetPort: 50051
+  selector:
+   app: payment-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: currency-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: currency-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/currencyservice:v0.9.0
+        name: currency-service-container
+        ports:
+          - containerPort: 7000
+        env:
+          - name: PORT
+            value: "7000"
+          - name: DISABLE_PROFILER
+            value: "1"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: currency-service-svc
+  name: currency-service-svc
+spec:
+  ports:
+  - port: 7000
+    protocol: TCP
+    targetPort: 7000
+  selector:
+   app: currency-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: shipping-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: shipping-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/shippingservice:v0.9.0
+        name: shipping-service-container
+        ports:
+          - containerPort: 50051
+        env:
+          - name: PORT
+            value: "50051"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shipping-service-svc
+  name: shipping-service-svc
+spec:
+  ports:
+  - port: 50051
+    protocol: TCP
+    targetPort: 50051
+  selector:
+   app: shipping-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: ad-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ad-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ad-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/adservice:v0.9.0
+        name: ad-service-container
+        ports:
+          - containerPort: 9555
+        env:
+          - name: PORT
+            value: "9555"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ad-service-svc
+  name: ad-service-svc
+spec:
+  ports:
+  - port: 9555
+    protocol: TCP
+    targetPort: 9555
+  selector:
+   app: ad-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: cart-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: cart-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/cartservice:v0.9.0
+        name: cart-service-container
+        ports:
+          - containerPort: 7070
+        env:
+          - name: PORT
+            value: "7070"
+          - name: REDIS_ADDR
+            value: "redis-cart-svc:6379"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cart-service-svc
+  name: cart-service-svc
+spec:
+  ports:
+  - port: 7070
+    protocol: TCP
+    targetPort: 7070
+  selector:
+   app: cart-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: redis-cart-dep
+  name: redis-cart-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cart-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: redis-cart-pod
+    spec:
+      volumes:
+        - name: redis-data
+          emptyDir: {}
+      containers:
+      - image:  redis:alpine
+        name: redis-cart-container
+        volumeMounts:
+            - name: redis-data
+              mountPath: /data
+        ports:
+          - containerPort: 6379
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis-cart-svc
+  name: redis-cart-svc
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+   app: redis-cart-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: checkout-service-dep
+  name: checkout-service-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkout-service-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: checkout-service-pod
+    spec:
+      containers:
+      - image:  gcr.io/google-samples/microservices-demo/checkoutservice:v0.9.0
+        name: checkout-service-container
+        ports:
+          - containerPort: 5050
+        env:
+          - name: PORT
+            value: "5050"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalog-service-svc:3550"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "shipping-service-svc:50051"
+          - name: PAYMENT_SERVICE_ADDR
+            value: "payment-service-svc:50051"
+          - name: EMAIL_SERVICE_ADDR
+            value: "email-service-svc:5000"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "currency-service-svc:7000"
+          - name: CART_SERVICE_ADDR
+            value: "cart-service-svc:7070"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: checkout-service-svc
+  name: checkout-service-svc
+spec:
+  ports:
+  - port: 5050
+    protocol: TCP
+    targetPort: 5050
+  selector:
+   app: checkout-service-pod
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fontend
+  name: fontend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fontend-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: fontend-pod
+    spec:
+      containers:
+      - image: gcr.io/google-samples/microservices-demo/frontend:v0.9.0
+        name: fontend-container
+        ports:
+          - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "productcatalog-service-svc:3550"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "shipping-service-svc:50051"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "currency-service-svc:7000"
+          - name: CART_SERVICE_ADDR
+            value: "cart-service-svc:7070"
+          - name: AD_SERVICE_ADDR
+            value: "adservice:9555"
+          - name: CHECKOUT_SERVICE_ADDR
+            value: "checkoutservice:5050"
+          - name: RECOMMENDATION_SERVICE_ADDR
+            value: "recommendation-service-svc:8080"
+          - name: ENABLE_PROFILER
+            value: "0"
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fontend-svc
+  name: fontend-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30010
+  selector:
+   app: fontend-pod
+  type: NodePort
+status:
+  loadBalancer: {}
+
+---
