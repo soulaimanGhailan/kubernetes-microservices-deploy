@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.depName}}
-  name: {{ .Values.depName}}
+  name: {{ .Values.depName }}
 spec:
-  replicas: {{ .Values.replicasNum}}
+  replicas: {{ .Values.replicasNum }}
   selector:
     matchLabels:
-      app: {{ .Values.podName}}
+      app: {{ .Values.podName }}
   strategy: {}
   template:
     metadata:
       labels:
-        app: {{ .Values.podName}}
+        app: {{ .Values.podName }}
     spec:
       containers:
-      - image: "{{.Values.imageName}}:{{.Values.imageVersion}}"
-        name: {{ .Values.containerName}}
+      - image: "{{ .Values.imageName }}:{{ .Values.imageVersion }}"
+        name: {{ .Values.containerName }}
         ports:
-          - containerPort: {{ .Values.containerPort}}
-        {{ - range .Values.containerEnvVar }} 
+          - containerPort: {{ .Values.containerPort }}
         env:
-        - name: {{ .key}}
-          value: {{ .value | quote}}
-        {{ - end }}
+        {{- range .Values.containerEnvVar}} 
+        - name: {{ .key }}
+          value: {{ .value | quote }}
+        {{- end}}
