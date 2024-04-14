@@ -8,8 +8,8 @@ containerPort: 7000
 containerEnvVar:
   - key: PORT
     value: "7000"
-   - key: DISABLE_PROFILER
-     value: "1"
+  - key: DISABLE_PROFILER
+    value: "1"
 serviceName: currency-service-svc
 servicePort: 7000
 serviceType: ClusterIP

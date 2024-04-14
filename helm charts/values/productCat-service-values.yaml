@@ -6,8 +6,8 @@ imageVersion: v0.9.0
 containerName: productcatalog-service-container
 containerPort: 3550
 containerEnvVar:
-  - key: PORT
-    value: "3550"
+- key: PORT
+  value: "3550"
 serviceName: productcatalog-service-svc
 servicePort: 3550
 serviceType: ClusterIP

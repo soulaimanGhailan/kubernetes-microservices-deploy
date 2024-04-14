@@ -1,0 +1,57 @@
+releases:
+   - name: redis
+     chart: charts/redis-chart
+     values:
+     - values/redis-values.yaml
+     - replicasNum: "1"  # we can override the values here
+
+   - name: email-service
+     chart: charts/microservices
+     values:
+     - values/email-service-values.yaml
+
+   - name: recommendation-service
+     chart: charts/microservices
+     values:
+     - values/recommendation-service-values.yaml
+
+   - name: catalog-service
+     chart: charts/microservices
+     values:
+     - values/productCat-service-values.yaml
+
+   - name: payment-service
+     chart: charts/microservices
+     values:
+     - values/payment-service-values.yaml
+
+   - name: currency-service
+     chart: charts/microservices
+     values:
+     - values/currency-service-values.yaml
+  
+   - name: shipping-service
+     chart: charts/microservices
+     values:
+     - values/shipping-service-values.yaml
+
+   - name: ad-service
+     chart: charts/microservices
+     values:
+     - values/ad-service-values.yaml
+
+   - name: cart-service
+     chart: charts/microservices
+     values:
+     - values/cart-service-values.yaml
+
+   - name: checkout-service
+     chart: charts/microservices
+     values:
+     - values/checkout-service-values.yaml
+
+   - name: frontend
+     chart: charts/microservices
+     values:
+     - values/fontend-service-values.yaml
+    

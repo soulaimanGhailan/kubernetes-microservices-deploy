@@ -6,8 +6,8 @@ imageVersion: v0.9.0
 containerName: ad-service-container
 containerPort: 9555
 containerEnvVar:
-  - key: PORT
-    value: "9555"
+- key: PORT
+  value: "9555"
 serviceName: ad-service-svc
 servicePort: 9555
 serviceType: ClusterIP
