@@ -1,0 +1,15 @@
+depName: currency-service-dep
+replicasNum: 1
+podName: currency-service-pod
+imageName: gcr.io/google-samples/microservices-demo/currencyservice
+imageVersion: v0.9.0
+containerName: currency-service-container
+containerPort: 7000
+containerEnvVar:
+  - key: PORT
+    value: "7000"
+   - key: DISABLE_PROFILER
+     value: "1"
+serviceName: currency-service-svc
+servicePort: 7000
+serviceType: ClusterIP

@@ -1,0 +1,15 @@
+depName: payment-service-dep
+replicasNum: 1
+podName: payment-service-pod
+imageName: gcr.io/google-samples/microservices-demo/paymentservice
+imageVersion: v0.9.0
+containerName: payment-service-container
+containerPort: 50051
+containerEnvVar:
+  - key: PORT
+    value: "50051"
+  - key: DISABLE_PROFILER
+    value: "1"
+serviceName: payment-service-svc
+servicePort: 50051
+serviceType: ClusterIP

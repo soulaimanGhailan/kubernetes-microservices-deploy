@@ -1,0 +1,15 @@
+depName: recommendation-service-dep
+replicasNum: 1
+podName: recommendation-service-pod
+imageName: gcr.io/google-samples/microservices-demo/recommendationservice
+imageVersion: v0.9.0
+containerName: recommendation-service-container
+containerPort: 8080
+containerEnvVar:
+  - key: PORT
+    value: "8080"
+  - key: PRODUCT_CATALOG_SERVICE_ADDR
+    value: "productcatalog-service-svc:3550"
+serviceName: recommendation-service-svc
+servicePort: 8080
+serviceType: ClusterIP

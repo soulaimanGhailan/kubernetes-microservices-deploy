@@ -1,0 +1,13 @@
+depName: shipping-service-dep
+replicasNum: 1
+podName: shipping-service-pod
+imageName: gcr.io/google-samples/microservices-demo/shippingservice
+imageVersion: v0.9.0
+containerName: shipping-service-container
+containerPort: 50051
+containerEnvVar:
+  - key: PORT
+    value: "50051"
+serviceName: shipping-service-svc
+servicePort: 50051
+serviceType: ClusterIP

@@ -1,0 +1,13 @@
+depName: email-service-dep
+replicasNum: 1
+podName: email-service-pod
+imageName: gcr.io/google-samples/microservices-demo/emailservice
+imageVersion: v0.9.0
+containerName: email-service-container
+containerPort: 8080
+containerEnvVar:
+  - key: PORT
+    value: "8080"
+serviceName: email-service-svc
+servicePort: 5000
+serviceType: ClusterIP

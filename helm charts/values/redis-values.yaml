@@ -1,0 +1,9 @@
+depName: redis-cart-dep
+replicasNum: 1
+podName: redis-cart-pod
+imageName: redis
+imageVersion: alpine
+containerName: redis-cart-container
+containerPort: 6379
+serviceName: redis-cart-svc
+servicePort: 6379

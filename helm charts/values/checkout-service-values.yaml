@@ -1,0 +1,25 @@
+depName: checkout-service-dep
+replicasNum: 1
+podName: checkout-service-pod
+imageName: gcr.io/google-samples/microservices-demo/checkoutservice
+imageVersion: v0.9.0
+containerName: checkout-service-container
+containerPort: 5050
+containerEnvVar:
+  - key: PORT
+    value: "5050"
+  - key: PRODUCT_CATALOG_SERVICE_ADDR
+    value: "productcatalog-service-svc:3550"
+  - key: SHIPPING_SERVICE_ADDR
+    value: "shipping-service-svc:50051"
+  - key: PAYMENT_SERVICE_ADDR
+    value: "payment-service-svc:50051"
+  - key: EMAIL_SERVICE_ADDR
+    value: "email-service-svc:5000"
+  - key: CURRENCY_SERVICE_ADDR
+    value: "currency-service-svc:7000"
+  - key: CART_SERVICE_ADDR
+    value: "cart-service-svc:7070"
+serviceName: checkout-service-svc
+servicePort: 5050
+serviceType: ClusterIP

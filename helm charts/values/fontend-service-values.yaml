@@ -1,0 +1,29 @@
+depName: fontend-dep
+replicasNum: 1
+podName: fontend-pod
+imageName: gcr.io/google-samples/microservices-demo/frontend
+imageVersion: v0.9.0
+containerName: fontend-container
+containerPort: 8080
+containerEnvVar:
+    - key: PORT
+      value: "8080"
+    - key: PRODUCT_CATALOG_SERVICE_ADDR
+      value: "productcatalog-service-svc:3550"
+    - key: SHIPPING_SERVICE_ADDR
+      value: "shipping-service-svc:50051"
+    - key: CURRENCY_SERVICE_ADDR
+      value: "currency-service-svc:7000"
+    - key: CART_SERVICE_ADDR
+      value: "cart-service-svc:7070"
+    - key: AD_SERVICE_ADDR
+      value: "adservice:9555"
+    - key: CHECKOUT_SERVICE_ADDR
+      value: "checkoutservice:5050"
+    - key: RECOMMENDATION_SERVICE_ADDR
+      value: "recommendation-service-svc:8080"
+    - key: ENABLE_PROFILER
+      value: "0"
+serviceName: fontend-svc
+servicePort: 8080
+serviceType: LoadBalancer

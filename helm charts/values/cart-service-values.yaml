@@ -1,0 +1,15 @@
+depName: cart-service-dep
+replicasNum: 1
+podName: cart-service-pod
+imageName: gcr.io/google-samples/microservices-demo/cartservice
+imageVersion: v0.9.0
+containerName: cart-service-container
+containerPort: 7070
+containerEnvVar:
+  - key: PORT
+    value: "7070"
+  - key: REDIS_ADDR
+    value: "redis-cart-svc:6379"
+serviceName: cart-service-svc
+servicePort: 7070
+serviceType: ClusterIP
